@@ -193,7 +193,8 @@ bool TriangleMeshBuilder::cleanMesh(bool validate, PxTriangleMeshCookingResult::
 		PxMemCopy(mMeshData.mVertices, cleaner.mVerts, mMeshData.mNbVertices*sizeof(PxVec3));
 	}
 
-	// PT: deal with topology
+
+
 	{
 		PX_ASSERT(!(mMeshData.mFlags & PxTriangleMeshFlag::e16_BIT_INDICES));
 		if(mMeshData.mNbTriangles!=cleaner.mNbTris)
@@ -212,15 +213,20 @@ bool TriangleMeshBuilder::cleanMesh(bool validate, PxTriangleMeshCookingResult::
 			const PxU32 vref2 = cleaner.mIndices[i*3+2];
 			PX_ASSERT(vref0!=vref1 && vref0!=vref2 && vref1!=vref2);
 
+
 			reinterpret_cast<Gu::TriangleT<PxU32>*>(mMeshData.mTriangles)[i].v[0] = vref0;
 			reinterpret_cast<Gu::TriangleT<PxU32>*>(mMeshData.mTriangles)[i].v[1] = vref1;
 			reinterpret_cast<Gu::TriangleT<PxU32>*>(mMeshData.mTriangles)[i].v[2] = vref2;
 
-			if(		(v[vref0] - v[vref1]).magnitudeSquared() >= testLength
-				||	(v[vref1] - v[vref2]).magnitudeSquared() >= testLength
-				||	(v[vref2] - v[vref0]).magnitudeSquared() >= testLength
-				)
+			float va1 = (v[vref0] - v[vref1]).magnitudeSquared();
+			float va2 = (v[vref1] - v[vref2]).magnitudeSquared();
+			float va3 = (v[vref2] - v[vref0]).magnitudeSquared();
+
+			if(va1 >= testLength||	va2 >= testLength || va3 >= testLength)
+			{
 				bigTriangle = true;
+			}
+
 		}
 		if(bigTriangle)
 		{

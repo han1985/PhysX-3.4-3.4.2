@@ -194,7 +194,7 @@ class PxTriangleMesh : public PxBase
 	\brief Returns the triangle indices.
 
 	The indices can be 16 or 32bit depending on the number of triangles in the mesh.
-	Call getTriangleMeshFlags() to know if the indices are 16 or 32 bits.
+	Call () to know if the indices are 16 or 32 bits.
 
 	The number of indices is the number of triangles * 3.
 

@@ -89,6 +89,7 @@ PxU32 Foundation::getWarnOnceTimestamp()
 
 void Foundation::error(PxErrorCode::Enum c, const char* file, int line, const char* messageFmt, ...)
 {
+	return;
 	va_list va;
 	va_start(va, messageFmt);
 	errorImpl(c, file, line, messageFmt, va);
